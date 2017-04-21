@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %} {% endblock %}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href={% static "dssWeb/css/bootstrap.css" %} rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href={% static "dssWeb/css/sb-admin.css" %} rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href={% static "dssWeb/css/plugins/morris.css" %} rel="stylesheet">
+
+    <!-- Map icons -->
+    <link href={% static "dssWeb/css/map-icons.css" %} rel="stylesheet">
+    <link href="{% static "dssWeb/fonts/map-icons.svg" %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href={% static "dssWeb/font-awesome/css/font-awesome.min.css" %} rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src={% static "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" %}></script>
+        <script src={% static "https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" %}></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Home</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                {% if request.user.is_authenticated %}
+                        <li class="dropdown">
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ request.user.username }} <span class="glyphicon glyphicon-user"></span><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/admin/">Admin Section &nbsp;<span class="glyphicon glyphicon-lock"></span>  </a>
+                                </li>
+                                <li class="divider">
+                                <li>
+                                    <a href="{% url 'logout' %}">Logout &nbsp;<span class="glyphicon glyphicon-off"></span>  </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                         <li class="dropdown">
+                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login/Signup <span class="glyphicon glyphicon-log-in"></span><strong class="caret"></strong></a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{% url 'login' %}">Login &nbsp;<span class="glyphicon glyphicon-off"></span>  </a>
+                                                </li>
+                                                <li class="divider">
+                                                <li>
+                                                    <a href="#">Sign Up &nbsp;<span class="glyphicon glyphicon-record"></span>  </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                    {% endif %}
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'profitabilityAnalysis' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Profitability</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dailyRoutes' %}"><i class="fa fa-fw fa-table"></i>Daily Routes</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'routeAllocation' %}"><i class="fa fa-fw fa-edit"></i> Allocate Route</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'feesTable' %}"><i class="fa fa-fw fa-desktop"></i> Fee Table</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                {% block container %}
+
+                {% endblock %}
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src={% static "dssWeb/js/jquery.js" %}></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src={% static "dssWeb/js/bootstrap.min.js" %}></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src={% static "dssWeb/js/plugins/morris/raphael.min.js" %}></script>
+    <script src={% static "dssWeb/js/plugins/morris/morris.min.js" %}></script>
+    <script src={% static "dssWeb/js/plugins/morris/morris-data.js" %}></script>
+    <script src={% static "dssWeb/js/map-icons.js" %}></script>
+
+<!--
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAjpn0_OR1ASmzc4f1y4tJrQE3673_vu8&callback=loadMap">
+    </script>
+
+    <script>
+        function loadMap() {
+           var mapOptions = {
+              center:new google.maps.LatLng(-17.785199, 31.0521989),
+              zoom:12,
+              mapTypeId:google.maps.MapTypeId.ROADMAP
+               };
+
+            var map = new google.maps.Map(document.getElementById("sample"),mapOptions);
+
+            var HQ = new google.maps.Marker({
+               position: new google.maps.LatLng(-17.771125, 31.047798),
+               map: map,
+                draggable:true,
+                icon: {
+                        path: SQUARE_PIN,
+                        fillColor: '#00CCBB',
+                        fillOpacity: 1,
+                        strokeColor: '',
+                        strokeWeight: 0
+                    },
+                animation:google.maps.Animation.Drop
+            });
+            var count=0,pref = 0;
+            {% for foo in cons %}
+                count ++
+                console.log(count);
+                console.log({{ foo.destination.lat }}, {{ foo.destination.long }})
+                //set markers for the map
+                var foo = new google.maps.Marker({
+               position: new google.maps.LatLng({{ foo.destination.lat }}, {{ foo.destination.long }}),
+               map: map,
+                icon: {
+                        path: MAP_PIN,
+                        fillColor: '#00CCBB',
+                        fillOpacity: 1,
+                        strokeColor: '',
+                        strokeWeight: 0
+                    },
+                animation:google.maps.Animation.Drop
+            });
+
+                {% endfor %}
+
+        //display customer depots markers on map
+        for (i in count){
+            marker.setMap(foo)
+        }
+
+            marker.setMap(HQ);
+
+            var HQwindow = new google.maps.InfoWindow({
+               content:"Pickup Depot , Road no 22, Harare, Zimbabwe"
+            });
+
+            HQwindow.open(map,marker);
+        }
+            google.maps.event.addDomListener(window, 'load', loadMap);
+    </script>
+-->
+</body>
+
+</html>

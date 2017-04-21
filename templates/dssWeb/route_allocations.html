@@ -1,0 +1,102 @@
+{% extends 'dssWeb/base.html' %}
+{% block title %}
+    Route Allocations
+{% endblock %}
+{% block container %}
+    <div class="container-fluid">
+                <!-- google maps container -->
+                <!--
+                <div id = "sample" style = "width:900px; height:580px;"></div>
+                -->
+                <div class="row">
+                    <div class="col-lg-8">
+
+                        <form role="form" method="post" action="{% url 'vrpSolve' %}">
+                        {% csrf_token %}
+                            <!--
+                            <div class="form-group">
+                                <label>Import Routes</label>
+                                <input type="file">
+                            </div>
+                            -->
+                            <div class="form-group">
+                                <label>Distribution Point</label>
+                                <select class="form-control">
+                                    {% for base in bases %}
+                                        <option name="base" value="{{ base.location }}">{{ base.name }} at {{ base.address }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Orders to Dispatch</label>
+
+                                {% for con in cons %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="cons" id="con{{ forloop.counter  }}" value="{{ con.id }}">{{ con.destination.user }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            <!--imported orders-->
+                            {% for imp in imports %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="imps" id="imp{{ forloop.counter  }}" value="{{ imp.id }}">{{ imp.customerName }}
+                                    </label>
+                                </div>
+
+                            {% endfor %}
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Trucks to dispatch</label>
+                                {% for vehicle in vehicles %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="trucks" id="vehicle{{ forloop.counter }}" value="{{ vehicle.id }}">{{ vehicle.name }} ({{ vehicle.numberPlate }}), {{ vehicle.tonnage }} Tonne
+                                        </label>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Loading & offloading times(minutes)</label>
+                                <input class="form-control" type="number" name="loadTime" value="loadTime" placeholder="eg. '30' for 30 minutes">
+                            </div>
+<!--
+                            <div class="form-group">
+                                <label>Text area</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Inline Radio Buttons</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3
+                                </label>
+                            </div>
+                                    -->
+                            <button type="submit" class="btn btn-primary">Schedule Routes</button>
+                            <button type="reset" class="btn btn-danger">Reset Button</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+{% endblock %}

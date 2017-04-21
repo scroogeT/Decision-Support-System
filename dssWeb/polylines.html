@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+      // This example creates a 2-pixel-wide red polyline showing the path of William
+      // Kingsford Smith's first trans-Pacific flight between Oakland, CA, and
+      // Brisbane, Australia.
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: -17.785199, lng: 31.0521989},
+          mapTypeId: 'roadmap' //can use hybrid
+        });
+
+        var flightPlanCoordinates = [
+          {lng: 31.0335581, lat: -17.8253389},
+          {lng: 31.032492, lat: -17.8256501},
+          
+          {lng: 31.032492, lat: -17.8256501},
+          {lng: 31.0330784, lat: -17.8286194},
+          
+          {lng: 31.0330784, lat: -17.8286194},
+          {lng: 31.0330086, lat: -17.8294398},
+          
+          {lng: 31.0330086, lat: -17.8294398},
+          {lng: 31.03211739999999, lat: -17.8308003},
+          
+          {lng: 31.03211739999999, lat: -17.8308003},
+          {lng: 31.03215429999999, lat: -17.8317859},
+          
+          {lng: 31.0388372, lat: -17.8470579},
+          {lng: 31.03215429999999, lat: -17.8317859},
+          
+          {lng: 31.0388372, lat: -17.8470579},
+          {lng: 31.0387363, lat: -17.8338253},
+          {'lng': 31.0741195, 'lat': -18.016023},
+          {'lng': 31.0681032, 'lat': -18.0201779}
+        ];
+        var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        var polylyn = new google.maps.polyline({'points': 'r`zlBgdu|DCUAQ?M@IFUJQNOPMTETCRBLBLDHFJHFHFJDLBL@D@D?D?D?D?BAD?D@P@RDv@@RDNFTj@|@Z`@lBzCX`@XZ~@lAdA~@bAv@DBtAr@dBj@|Ez@zLpAB@tNrAfGp@~QjBrOrBZJVRp@b@'}) 
+
+        polylyn.setMap(map)
+        //flightPath.setMap(map);
+      }
+    </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAjpn0_OR1ASmzc4f1y4tJrQE3673_vu8&callback=initMap">
+    </script>
+  </body>
+</html>
